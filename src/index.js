@@ -6,6 +6,7 @@ import logo from "../resources/logo-white.png";
 import ClockFull from "./clock.js";
 import BuildStatus from "./BuildStatus";
 import SlackComponent from "./SlackComponent";
+import BoardCalendar from "./BoardCalendar";
 
 const Banner = styled.nav`
   background: ${CX_DARK_BLUE};
@@ -85,6 +86,7 @@ ReactDOM.render(
         <LeftBox>
           {/* Left box content */}
           <BuildStatus />
+          <BoardCalendar/>
         </LeftBox>
         <RightBox>
           {/* Right box content */}
