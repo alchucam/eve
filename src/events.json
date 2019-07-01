@@ -38,11 +38,11 @@
                 "content": "<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n<meta content=\"text/html; charset=iso-8859-1\">\r\n<meta content=\"text/html; charset=iso-8859-1\">\r\n</head>\r\n<body>\r\nAmbrosio te invita a asistir a un evento\r\n</body>\r\n</html>\r\n"
             },
             "start": {
-                "dateTime": "2017-11-16T08:00:00.0000000",
+                "dateTime": "2019-07-16T08:00:00.0000000",
                 "timeZone": "UTC"
             },
             "end": {
-                "dateTime": "2017-11-16T08:30:00.0000000",
+                "dateTime": "2019-07-17T08:30:00.0000000",
                 "timeZone": "UTC"
             },
             "location": {

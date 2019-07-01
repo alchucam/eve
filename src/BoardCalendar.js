@@ -18,6 +18,7 @@ function updateEvents(eventData){
   for (var i = 0; i < eventData.length; i++){
     eventData[i].start = localizeTime(eventData[i].start.dateTime, eventData[i].start.timeZone);
     eventData[i].end = localizeTime(eventData[i].end.dateTime, eventData[i].end.timeZone);
+    eventData[i].title = AddTimetoTitle(eventData[i].title, eventData[i].start);
   }
   console.log(eventData);
   return eventData;
@@ -26,6 +27,12 @@ function updateEvents(eventData){
 function localizeTime(time, timezone){
   return new Date(time.split("T") + " " + timezone);
 }
+
+function AddTimetoTitle(title, time){
+  var regexRule = /\d{2}:\d{2}/;
+  return regexRule.exec(time) + " " + title;
+}
+
 
 //date: inclusive:exclusive. month needs to be -1
 class BoardCalendar extends React.Component{
