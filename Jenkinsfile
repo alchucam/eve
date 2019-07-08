@@ -23,7 +23,15 @@ pipeline {
     }
     stage('Build Image') {
       steps {
-        sh 'make image GIT_BRANCH=' + env.BRANCH_NAME
+        withCredentials([
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL')
+        ]) {
+          sh 'export ${SLACK_TOKEN}'
+          sh 'export ${SLACK_CHHANEL}'
+          sh 'make image GIT_BRANCH=' + env.BRANCH_NAME
+        }
+        
       }
     }
     stage('Push Image') {
@@ -51,7 +59,7 @@ pipeline {
         }
       }
       steps {
-        sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard | awk -F ":" \'{print $1}\')'
+        sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
       }
     }
   }
