@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { CX_OFF_WHITE, CX_FONT } from "./Constants.js";
+import { CX_OFF_WHITE, CX_FONT, CX_DARK_BLUE } from "./Constants.js";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import List from '@material-ui/core/List';
@@ -46,7 +46,9 @@ const styles = {
         // margin: "20px 0 20px 0"
         top: "20px",
         position:"relative",
-        boxShadow: `0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)`
+        boxShadow: `0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)`,
+        background: CX_OFF_WHITE
+        font: CX_FONT
     },
     insideCard  : {
         position: "relative",
@@ -62,7 +64,7 @@ const styles = {
         // display: "flex",
     },
     cardheader : {
-        background: '#00ADD2',
+        background: CX_DARK_BLUE,
         textDecoration: 'none',
         color: 'black'
     }
