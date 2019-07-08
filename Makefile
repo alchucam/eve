@@ -1,6 +1,6 @@
 REGISTRY=registry.phx.connexta.com:5000
 IMAGE_OWNER=devops
-IMAGE_NAME=eve-wallboard
+IMAGE_NAME=eve-wallboard-testing
 IMAGE_TAG=master
 BUILD_TAG:=$(REGISTRY)/$(IMAGE_OWNER)/$(IMAGE_NAME):$(IMAGE_TAG)
 
