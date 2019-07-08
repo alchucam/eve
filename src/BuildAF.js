@@ -45,7 +45,8 @@ const styles = {
         // position: "relative",
         // margin: "20px 0 20px 0"
         top: "20px",
-        position:"relative"
+        position:"relative",
+
     },
     insideCard  : {
         position: "relative",
@@ -62,6 +63,8 @@ const styles = {
     },
     cardheader : {
         background: '#00ADD2',
+        textDecoration: 'none',
+        color: 'black'
     }
 }
 
@@ -149,19 +152,23 @@ class BuildAF extends React.Component {
             return (
                 <List>               
                 {this.state.failedData.map((data, index) =>(
-                    <ListItem key = {index} button component="a" href={AFJenkinLink+data.id}>
-                        {(data.description === "..." ?
+                    (data.description === "..." ?
+                    <ListItem key = {index}>
                         <ListItemText
                             primary={"..."}>
                         </ListItemText>
-                        :
+                    </ListItem>
+                    :
+                    <ListItem key = {index} button component="a" href={AFJenkinLink+data.id}>
                         <ListItemText
                             primary={index + " (" + data.result + ") " + (data.description ? data.description: "build title not provided")}
                             secondary={(extractTime(data.startTime)) + " Triggered by " + (data.causes ? (data.causes[0].userId ? data.causes[0].userId : "timer") : "")}>
                         </ListItemText>
-                        )}
                     </ListItem>
-                ))}
+                    
+                    )))}
+
+              
                 </List>
             )
         }
@@ -194,6 +201,8 @@ class BuildAF extends React.Component {
                     {this.state.failedData.map((data,index) =>
                         {return index + " "})}
                     style={styles.cardheader}
+                    button component="a"
+                    href={AFJenkinLink}
                     >
                     {/*
                     style={styles.cardHeader}>
