@@ -10,9 +10,6 @@ help: ## Display help.
 
 .PHONY: image
 image: ## Build docker image
-	@echo "Building target files"
-	@yarn install
-	@yarn build
 	@echo "\nBuilding image: $(BUILD_TAG)\n"
 	@export DOCKER_API_VERSION=1.23
 	@env DOCKER_API_VERSION=1.23 docker build --pull -t $(BUILD_TAG) .
