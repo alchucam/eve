@@ -6,6 +6,7 @@ import logo from "../resources/logo-white.png";
 import ClockFull from "./clock.js";
 import BuildStatus from "./BuildStatus";
 import SlackComponent from "./SlackComponent";
+import BuildAF from "./BuildAF";
 
 const Banner = styled.nav`
   background: ${CX_DARK_BLUE};
@@ -39,7 +40,8 @@ const LeftBox = styled.nav`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: flex-start;
 
   position: absolute;
   top: 131px;
@@ -84,6 +86,8 @@ ReactDOM.render(
       <ContentHorz>
         <LeftBox>
           {/* Left box content */}
+          <BuildStatus />
+          <BuildAF />
         </LeftBox>
         <RightBox>
           {/* Right box content */}
