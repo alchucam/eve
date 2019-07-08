@@ -20,9 +20,11 @@ Set both of these variables before running ```yarn start```.
 Note that the ```-m``` flag makes it a system property so the command line shell must be run in 
 administrator mode.  
 Example: ```setx -m SLACK_TOKEN 12345```
+Example: ```setx -m SLACK_CHANNEL 12345```
   
 **UNIX:** You can set env variables by using the command ```export <Var_Name>=<Var_Value>```  
 Example: ```export SLACK_TOKEN=12345```
+Example: ```export SLACK_CHANNEL=12345```
 
 ## Format Code
 Use `prettier` for code formatting through yarn:  
