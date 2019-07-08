@@ -47,8 +47,9 @@ const styles = {
         top: "20px",
         position:"relative",
         boxShadow: `0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)`,
-        background: CX_OFF_WHITE
-        font: CX_FONT
+        background: CX_OFF_WHITE,
+        fontFamily: CX_FONT,
+        
     },
     insideCard  : {
         position: "relative",
@@ -66,7 +67,8 @@ const styles = {
     cardheader : {
         background: CX_DARK_BLUE,
         textDecoration: 'none',
-        color: 'black'
+        color: 'black',
+        fontSize: "30px",
     }
 }
 
@@ -163,7 +165,7 @@ class BuildAF extends React.Component {
                     :
                     <ListItem key = {index} button component="a" href={AFJenkinLink+data.id}>
                         <ListItemText
-                            primary={index + " (" + data.result + ") " + (data.description ? data.description: "build title not provided")}
+                            primary={ "	\u274C (" + data.result + ") " + (data.description ? data.description: "build title not provided")}
                             secondary={(extractTime(data.startTime)) + " Triggered by " + (data.causes ? (data.causes[0].userId ? data.causes[0].userId : "timer") : "")}>
                         </ListItemText>
                     </ListItem>
@@ -199,9 +201,7 @@ class BuildAF extends React.Component {
             <Card style={styles.card}>
                 <CardHeader
                     title= {AFpipeline}
-                    subheader=
-                    {this.state.failedData.map((data,index) =>
-                        {return index + " "})}
+                    subheader= "Display failed build from most recent to last successful build"
                     style={styles.cardheader}
                     button component="a"
                     href={AFJenkinLink}
