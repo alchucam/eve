@@ -48,10 +48,17 @@ pipeline {
     // The following stage doesn't actually re-deploy the marathon service, but actually kills the existing docker container
     // that is tied to it, so that marathon reschedules it. This is to get around the annoying dc/os auth issues
     stage('Deploy Marathon Service') {
-      environment {
-        DOCKER_HOST="tcp://swarm.phx.connexta.com:2375"
-        DOCKER_API_VERSION=1.23
-      }
+        withCredentials([
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN_ID'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
+        ]) {
+          environment {
+            DOCKER_HOST="tcp://swarm.phx.connexta.com:2375"
+            DOCKER_API_VERSION=1.23
+            SLACK_TOKEN=${SLACK_TOKEN_ID}
+            SLACK_CHANNEL=${SLACK_CHANNEL_ID}
+          }
+        }
       when {
         allOf {
           expression { env.CHANGE_ID == null }
