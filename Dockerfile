@@ -4,7 +4,6 @@ FROM node:latest as build-stage
 
 ARG SLACK_CHANNEL
 ARG SLACK_TOKEN
-RUN echo "$SLACK_CHANNEL"
 
 COPY . /app
 
