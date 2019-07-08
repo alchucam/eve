@@ -145,7 +145,7 @@ class BuildAF extends React.Component {
         return (
             <List>               
             {this.state.failedData.map((data, index) =>(
-                <ListItem key = {index}>
+                <ListItem key = {index} >
                     {(data.description === "..." ?
                     <ListItemText
                         primary={"..."}>
