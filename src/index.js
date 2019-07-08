@@ -40,7 +40,8 @@ const LeftBox = styled.nav`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: flex-start;
 
   position: absolute;
   top: 131px;
