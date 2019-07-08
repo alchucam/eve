@@ -7,7 +7,10 @@ pipeline {
     disableConcurrentBuilds()
     timestamps()
   }
-  environment { PATH="${tool 'docker-latest'}/bin:$PATH" }
+  environment { 
+    PATH="${tool 'docker-latest'}/bin:$PATH"
+    SLACK_TOKEN = credentials('SLACK_TOKEN')
+    SLACK_CHANNEL = credentials('SLACK_CHANNEL') }
   triggers {
     /*
         Restrict nightly builds to master branch, all others will be built on change only.
@@ -24,12 +27,12 @@ pipeline {
     stage('Build Image') {
       steps {
         withCredentials([
-          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN_ID'),
-          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL')
         ]) {
-          sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
-          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
-          sh 'make image SLACK_TOKEN=${SLACK_TOKEN_ID} SLACK_CHANNEL=${SLACK_CHANNEL_ID} GIT_BRANCH=' + env.BRANCH_NAME
+          sh 'export SLACK_TOKEN=${SLACK_TOKEN}'
+          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL}'
+          sh 'make image SLACK_TOKEN=${SLACK_TOKEN} SLACK_CHANNEL=${SLACK_CHANNEL} GIT_BRANCH=' + env.BRANCH_NAME
         }
         
       }
@@ -43,12 +46,12 @@ pipeline {
       }
       steps {
         withCredentials([
-          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN_ID'),
-          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL')
         ]) {
-          sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
-          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
-          sh 'make push SLACK_TOKEN=${SLACK_TOKEN_ID} SLACK_CHANNEL=${SLACK_CHANNEL_ID} GIT_BRANCH=' + env.BRANCH_NAME
+          sh 'export SLACK_TOKEN=${SLACK_TOKEN}'
+          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL}'
+          sh 'make push SLACK_TOKEN=${SLACK_TOKEN} SLACK_CHANNEL=${SLACK_CHANNEL} GIT_BRANCH=' + env.BRANCH_NAME
         }
       }
     }
@@ -67,11 +70,11 @@ pipeline {
       }
       steps {
         withCredentials([
-          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN_ID'),
-          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL')
         ]) {
-          sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
-          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
+          sh 'export SLACK_TOKEN=${SLACK_TOKEN}'
+          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL}'
           sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
         }
       }
