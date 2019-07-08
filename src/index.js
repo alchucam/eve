@@ -84,7 +84,6 @@ ReactDOM.render(
       <ContentHorz>
         <LeftBox>
           {/* Left box content */}
-          <BuildStatus />
         </LeftBox>
         <RightBox>
           {/* Right box content */}
