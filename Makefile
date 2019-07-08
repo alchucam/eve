@@ -18,4 +18,4 @@ image: ## Build docker image
 push: ## Push docker image
 	@echo "\nPushing image: $(BUILD_TAG)\n"
 	@export DOCKER_API_VERSION=1.23
-	@env DOCKER_API_VERSION=1.23 docker push $(BUILD_TAG)
+	@env DOCKER_API_VERSION=1.23 SLACK_CHANNEL=$(SLACK_CHANNEL) SLACK_TOKEN=$(SLACK_TOKEN) docker push $(BUILD_TAG)

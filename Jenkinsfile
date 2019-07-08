@@ -42,7 +42,14 @@ pipeline {
         }
       }
       steps {
-        sh 'make push GIT_BRANCH=' + env.BRANCH_NAME
+        withCredentials([
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN_ID'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
+        ]) {
+          sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
+          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
+          sh 'make push SLACK_TOKEN=${SLACK_TOKEN_ID} SLACK_CHANNEL=${SLACK_CHANNEL_ID} GIT_BRANCH=' + env.BRANCH_NAME
+        }
       }
     }
     // The following stage doesn't actually re-deploy the marathon service, but actually kills the existing docker container
