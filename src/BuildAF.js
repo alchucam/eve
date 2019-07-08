@@ -15,6 +15,9 @@ const AFURL =
 const AFpipeline =
     "SOAESB_Nightly_Release_Builder";
 
+const AFJenkinLink =
+    "http://jenkins.phx.connexta.com/service/jenkins/job/HAART-Jobs/job/SOAESB_Nightly_Release_Builder/";
+
 const Builds = styled.div`
   width: 55vw;
   height: 200px;
@@ -142,24 +145,37 @@ class BuildAF extends React.Component {
     //return bullet format of failed Data and its content for display
     //if failed data has been trimmed for too many data, it will show ... for trimmed off data.
     getListContents(){
-        return (
-            <List>               
-            {this.state.failedData.map((data, index) =>(
-                <ListItem key = {index} >
-                    {(data.description === "..." ?
-                    <ListItemText
-                        primary={"..."}>
-                    </ListItemText>
-                    :
-                    <ListItemText
-                        primary={index + " (" + data.result + ") " + (data.description ? data.description: "build title not provided")}
-                        secondary={(extractTime(data.startTime)) + " Triggered by " + (data.causes ? (data.causes[0].userId ? data.causes[0].userId : "timer") : "")}>
-                    </ListItemText>
-                    )}
-                </ListItem>
-            ))}
-            </List>
-        )
+        if (this.state.failedData.length > 0){
+            return (
+                <List>               
+                {this.state.failedData.map((data, index) =>(
+                    <ListItem key = {index} button component="a" href={AFJenkinLink+data.id}>
+                        {(data.description === "..." ?
+                        <ListItemText
+                            primary={"..."}>
+                        </ListItemText>
+                        :
+                        <ListItemText
+                            primary={index + " (" + data.result + ") " + (data.description ? data.description: "build title not provided")}
+                            secondary={(extractTime(data.startTime)) + " Triggered by " + (data.causes ? (data.causes[0].userId ? data.causes[0].userId : "timer") : "")}>
+                        </ListItemText>
+                        )}
+                    </ListItem>
+                ))}
+                </List>
+            )
+        }
+        else {
+            return (
+                <List>
+                    <ListItem>
+                        <ListItemText
+                            primary={"Current build is successful!!"}>
+                        </ListItemText>
+                    </ListItem>
+                </List>
+            )
+        }
     }
 
 
