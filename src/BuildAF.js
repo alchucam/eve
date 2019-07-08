@@ -132,6 +132,9 @@ class BuildAF extends React.Component {
         return failedData;
     }
 
+
+
+
     //fix " ..." problem
     getListContents(){
         return (
@@ -170,6 +173,9 @@ class BuildAF extends React.Component {
                     style={styles.cardHeader}>
                     style={styles.insideCard}> */}
                 </CardHeader>
+                <List>
+                    {/*add here...*/}
+                </List>
                 {this.getListContents()}
 
             </Card>
