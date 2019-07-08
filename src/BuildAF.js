@@ -46,7 +46,7 @@ const styles = {
         // margin: "20px 0 20px 0"
         top: "20px",
         position:"relative",
-
+        boxShadow: `0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)`
     },
     insideCard  : {
         position: "relative",
