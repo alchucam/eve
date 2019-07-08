@@ -24,11 +24,11 @@ pipeline {
     stage('Build Image') {
       steps {
         withCredentials([
-          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN'),
-          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL')
+          string(credentialsId: 'SLACK_TOKEN', variable: 'SLACK_TOKEN_ID'),
+          string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
         ]) {
-          sh 'export ${SLACK_TOKEN}'
-          sh 'export ${SLACK_CHHANEL}'
+          sh 'export ${SLACK_TOKEN_ID}'
+          sh 'export ${SLACK_CHHANEL_ID}'
           sh 'make image GIT_BRANCH=' + env.BRANCH_NAME
         }
         
