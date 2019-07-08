@@ -55,8 +55,8 @@ pipeline {
           environment {
             DOCKER_HOST="tcp://swarm.phx.connexta.com:2375"
             DOCKER_API_VERSION=1.23
-            SLACK_TOKEN=${SLACK_TOKEN_ID}
-            SLACK_CHANNEL=${SLACK_CHANNEL_ID}
+            SLACK_TOKEN='${SLACK_TOKEN_ID}'
+            SLACK_CHANNEL='${SLACK_CHANNEL_ID}'
           }
         }
       when {
