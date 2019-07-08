@@ -28,7 +28,7 @@ pipeline {
           string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
         ]) {
           sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
-          sh 'export SLACK_CHANNEL=${SLACK_CHHANEL_ID}'
+          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
           sh 'make image GIT_BRANCH=' + env.BRANCH_NAME + 'SLACK_TOKEN=${SLACK_TOKEN_ID} SLACK_CHANNEL=$(SLACK_CHANNEL_ID)'
         }
         
@@ -64,7 +64,7 @@ pipeline {
           string(credentialsId: 'SLACK_CHANNEL', variable: 'SLACK_CHANNEL_ID')
         ]) {
           sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
-          sh 'export SLACK_CHANNEL=${SLACK_CHHANEL_ID}'
+          sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
           sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
         }
       }
