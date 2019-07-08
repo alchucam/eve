@@ -29,7 +29,7 @@ pipeline {
         ]) {
           sh 'export SLACK_TOKEN=${SLACK_TOKEN_ID}'
           sh 'export SLACK_CHANNEL=${SLACK_CHANNEL_ID}'
-          sh 'make image SLACK_TOKEN=${SLACK_TOKEN_ID} SLACK_CHANNEL=$(SLACK_CHANNEL_ID) GIT_BRANCH=' + env.BRANCH_NAME
+          sh 'make image SLACK_TOKEN=${SLACK_TOKEN_ID} SLACK_CHANNEL=${SLACK_CHANNEL_ID} GIT_BRANCH=' + env.BRANCH_NAME
         }
         
       }
