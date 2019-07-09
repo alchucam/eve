@@ -12,17 +12,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-//URL for the AF team main repo to keep track of
-const AFURL =
-  "https://jenkins.phx.connexta.com/service/jenkins/blue/rest/organizations/jenkins/pipelines/HAART-Jobs/pipelines/";
-
-//Specific AF team Git build pipeline to keep track of
-const AFpipeline = "SOAESB_Nightly_Release_Builder";
-
-//URL for the AF team main repo Jenkins
-const AFJenkinLink =
-  "http://jenkins.phx.connexta.com/service/jenkins/job/HAART-Jobs/job/SOAESB_Nightly_Release_Builder/";
-
 const Builds = styled.div`
   width: 55vw;
   height: 200px;
@@ -93,15 +82,19 @@ class BuildAF extends React.Component {
       failedData: []
     });
     this.refreshBuildStatus();
-    setInterval(() => this.refreshBuildStatus(), 60000);
+    this.refreshIntervalID = setInterval(() => this.refreshBuildStatus(), 60000);
   }
 
+  componentWillUnmount(){
+      clearInterval(this.refreshIntervalID);
+  }
+  
   refreshBuildStatus() {
     this.updateBuildStatus();
   }
 
   updateBuildStatus() {
-    fetch(AFURL + AFpipeline + "/runs/")
+    fetch(this.props.URL + "/runs/")
       .then(response => response.json())
       .then(jsonData => {
         this.setState({
@@ -113,16 +106,16 @@ class BuildAF extends React.Component {
       .catch(e => console.log("error", e));
   }
 
-  //obtain all failed build in Jenkins up to last successful build
+  //obtain all failed build in Jenkins up to the last successful build,
+  //including the last successful build.
   getFailedData(jsonData) {
     let failedData = [];
 
     for (let i = 0; i < jsonData.length; i++) {
+      failedData.push(jsonData[i]);
       if (jsonData[i].result == "SUCCESS") {
-        failedData.push(jsonData[i]);
         break;
       }
-      failedData.push(jsonData[i]);
     }
 
     return this.trimFailedData(failedData);
@@ -163,7 +156,7 @@ class BuildAF extends React.Component {
                 key={index}
                 button
                 component="a"
-                href={AFJenkinLink + data.id}
+                href={this.props.jenkinlink + data.id}
               >
                 <ListItemText
                   primary={
@@ -212,14 +205,13 @@ class BuildAF extends React.Component {
     ) : (
       <Card style={styles.card}>
         <CardHeader
-          title={AFpipeline}
+          title={this.props.pipeline}
           subheader="Display failed build from most recent up to the last successful build"
           style={styles.cardheader}
-          button
           component="a"
-          href={AFJenkinLink}
+          href={this.props.jenkinlink}
           titleTypographyProps={{ variant: "h4" }}
-          subheaderTypographyProps={{ variant: "h6", color: CX_OFF_WHITE }}
+          subheaderTypographyProps={{ variant: "h6", color: "inherit" }}
         ></CardHeader>
         {this.getListContents()}
       </Card>
