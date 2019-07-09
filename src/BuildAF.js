@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+<<<<<<< HEAD
  //URL for the AF team main repo to keep track of 
 const AFURL =
  "https://jenkins.phx.connexta.com/service/jenkins/blue/rest/organizations/jenkins/pipelines/HAART-Jobs/pipelines/";
@@ -20,17 +21,37 @@ const AFJenkinLink =
     "http://jenkins.phx.connexta.com/service/jenkins/job/HAART-Jobs/job/SOAESB_Nightly_Release_Builder/";
 
  const Builds = styled.div`
+=======
+//URL for the AF team main repo to keep track of 
+const AFURL =
+ "https://jenkins.phx.connexta.com/service/jenkins/blue/rest/organizations/jenkins/pipelines/HAART-Jobs/pipelines/";
+
+//Specific AF team Git build pipeline to keep track of
+const AFpipeline =
+    "SOAESB_Nightly_Release_Builder";
+
+//URL for the AF team main repo Jenkins
+const AFJenkinLink =
+    "http://jenkins.phx.connexta.com/service/jenkins/job/HAART-Jobs/job/SOAESB_Nightly_Release_Builder/";
+
+const Builds = styled.div`
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
   width: 55vw;
   height: 200px;
   border: solid black 3px;
   border-radius: 20px;
   padding: 20px;
   background-color: ${CX_OFF_WHITE};
+<<<<<<< HEAD
    display: flex;
+=======
+  display: flex;
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+<<<<<<< HEAD
    font-size: 2em;
   font-family: ${CX_FONT};
 `;
@@ -40,6 +61,17 @@ const AFJenkinLink =
 `;
 
  const styles = {
+=======
+  font-size: 2em;
+  font-family: ${CX_FONT};
+`;
+
+const BuildAFDetail = styled.ul`
+    display: flex;
+`;
+
+const styles = {
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
     card : {
         top: "20px",
         position:"relative",
@@ -62,7 +94,11 @@ const AFJenkinLink =
     }
 }
 
+<<<<<<< HEAD
  //Reformat extracted time for better display
+=======
+//Reformat extracted time for better display
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
 function extractTime(time) {
     if (time){
         let extractedTime = time.split("T");
@@ -71,7 +107,11 @@ function extractTime(time) {
     }
 }
 
+<<<<<<< HEAD
  class BuildAF extends React.Component {
+=======
+class BuildAF extends React.Component {
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
     constructor(props) {
         super(props);
         this.state = {
@@ -81,7 +121,11 @@ function extractTime(time) {
         };
       }
 
+<<<<<<< HEAD
      // updates the build status every 60 sec
+=======
+    // updates the build status every 60 sec
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
     componentDidMount() {
         this.setState({ 
             data: [], 
@@ -92,11 +136,19 @@ function extractTime(time) {
         setInterval(() => this.refreshBuildStatus(), 60000);
     }
 
+<<<<<<< HEAD
      refreshBuildStatus() {
         this.updateBuildStatus();
     }
 
      updateBuildStatus() {
+=======
+    refreshBuildStatus() {
+        this.updateBuildStatus();
+    }
+
+    updateBuildStatus() {
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
         fetch(AFURL+AFpipeline+"/runs/")
             .then(response => response.json())
             .then(jsonData => {
@@ -107,12 +159,21 @@ function extractTime(time) {
             })
             .catch(e => console.log("error", e));
     }
+<<<<<<< HEAD
 
      //obtain all failed build in Jenkins up to last successful build
     getFailedData(jsonData){
         let failedData = [];
 
          for (let i = 0; i < jsonData.length; i++){
+=======
+    
+    //obtain all failed build in Jenkins up to last successful build
+    getFailedData(jsonData){
+        let failedData = [];
+        
+        for (let i = 0; i < jsonData.length; i++){
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
             if (jsonData[i].result == "SUCCESS"){ 
                 failedData.push(jsonData[i]);
                 break;
@@ -120,10 +181,17 @@ function extractTime(time) {
             failedData.push(jsonData[i]);
         }
 
+<<<<<<< HEAD
          return this.trimFailedData(failedData);
     }
 
      //trim the number of failed build data equals to numOfListItemstoKeep
+=======
+        return this.trimFailedData(failedData);
+    }
+
+    //trim the number of failed build data equals to numOfListItemstoKeep
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
     //display the most recent failed data equal to numOfLatestItemstoShow
     trimFailedData(failedData){
         let numOfListItemstoKeep = 4;
@@ -134,7 +202,11 @@ function extractTime(time) {
         return failedData;
     }
 
+<<<<<<< HEAD
      //return bullet format of failed Data and its content for display
+=======
+    //return bullet format of failed Data and its content for display
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
     //if failed data has been trimmed for too many data, it will show ... for trimmed off data.
     getListContents(){
         if (this.state.failedData.length > 0){
@@ -178,7 +250,11 @@ function extractTime(time) {
     }
 
 
+<<<<<<< HEAD
      render() {
+=======
+    render() {
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
         return this.state.isLoading ? (
           <Card style={styles.card}>Loading. . .</Card>
         ) : (
@@ -199,4 +275,8 @@ function extractTime(time) {
       }
 }
 
+<<<<<<< HEAD
  export default BuildAF; 
+=======
+export default BuildAF;
+>>>>>>> 3ec609859ff210ed8aa23bd8ccaeb829f647c327
