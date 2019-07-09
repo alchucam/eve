@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { CX_OFF_WHITE, CX_FONT, CX_DARK_BLUE } from "./Constants.js";
+import { CX_OFF_WHITE, CX_FONT, CX_DARK_BLUE, BATMAN_GRAY } from "./Constants.js";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import List from '@material-ui/core/List';
@@ -15,6 +15,7 @@ const AFURL =
 const AFpipeline =
     "SOAESB_Nightly_Release_Builder";
 
+//URL for the AF team main repo Jenkins
 const AFJenkinLink =
     "http://jenkins.phx.connexta.com/service/jenkins/job/HAART-Jobs/job/SOAESB_Nightly_Release_Builder/";
 
@@ -42,44 +43,26 @@ const BuildAFDetail = styled.ul`
 
 const styles = {
     card : {
-        // position: "relative",
-        // margin: "20px 0 20px 0"
         top: "20px",
         position:"relative",
         boxShadow: `0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)`,
         background: CX_OFF_WHITE,
         fontFamily: CX_FONT,
-        
-    },
-    insideCard  : {
-        position: "relative",
-        // margin: "-5px",
-        padding: "5px",
-        top: "10px",
-        // background: 'red',
-        // position: "relative",
-        // padding: "5px",
-        // margin: "-20 10 0 0",
-        // width: "10",
-        // // margin: "-20px",
-        // display: "flex",
+        color: BATMAN_GRAY,
     },
     cardheader : {
         background: CX_DARK_BLUE,
         textDecoration: 'none',
-        color: 'black',
-        fontSize: "30px",
+        color: BATMAN_GRAY,
+    },
+    listitemtext :{
+        color: BATMAN_GRAY
+    },
+    listitemtextdots : {
+        color: BATMAN_GRAY,
+        textAlign: 'center'
     }
 }
-
-// const styles = {
-//     gridList: {
-//         margin: '5px 5px 5px'
-//     }
-// };
-
-// const bulletPoint = styled
-
 
 //Reformat extracted time for better display
 function extractTime(time) {
@@ -130,8 +113,12 @@ class BuildAF extends React.Component {
     //obtain all failed build in Jenkins up to last successful build
     getFailedData(jsonData){
         let failedData = [];
-        for (let i = 1; i < jsonData.length; i++){ //NOTICE FIX I = 1 TO I = 0
-            if (jsonData[i].result == "SUCCESS"){ break; }
+        
+        for (let i = 0; i < jsonData.length; i++){
+            if (jsonData[i].result == "SUCCESS"){ 
+                failedData.push(jsonData[i]);
+                break;
+            }
             failedData.push(jsonData[i]);
         }
 
@@ -159,20 +146,22 @@ class BuildAF extends React.Component {
                     (data.description === "..." ?
                     <ListItem key = {index}>
                         <ListItemText
-                            primary={"..."}>
+                            primary={"\u22EE"}
+                            primaryTypographyProps={{variant:'h5'}}
+                            style={styles.listitemtextdots}>
                         </ListItemText>
                     </ListItem>
                     :
                     <ListItem key = {index} button component="a" href={AFJenkinLink+data.id}>
                         <ListItemText
-                            primary={ "	\u274C (" + data.result + ") " + (data.description ? data.description: "build title not provided")}
-                            secondary={(extractTime(data.startTime)) + " Triggered by " + (data.causes ? (data.causes[0].userId ? data.causes[0].userId : "timer") : "")}>
+                            primary={ (data.result ==="SUCCESS" ? "	\u2705 (" : " \u274C (") + data.result + ") " + (data.description ? data.description: "build title not provided")}
+                            secondary={(extractTime(data.startTime)) + " Triggered by " + (data.causes ? (data.causes[0].userId ? data.causes[0].userId : "timer") : "")}
+                            primaryTypographyProps={{variant:'h5'}}
+                            secondaryTypographyProps={{variant:'h6'}}
+                            style={styles.listitemtext}>
                         </ListItemText>
                     </ListItem>
-                    
                     )))}
-
-              
                 </List>
             )
         }
@@ -181,7 +170,8 @@ class BuildAF extends React.Component {
                 <List>
                     <ListItem>
                         <ListItemText
-                            primary={"Current build is successful!!"}>
+                            primary={"No Builds Detected"}
+                            primaryTypographyProps={{variant:'h5'}}>
                         </ListItemText>
                     </ListItem>
                 </List>
@@ -191,24 +181,19 @@ class BuildAF extends React.Component {
 
 
     render() {
-        console.log(this.state.data);
-        // console.log("failed dataaa ");
-        console.log(this.state.failedData);
-        // console.log(this.state.data[0].startTime);
         return this.state.isLoading ? (
           <Card style={styles.card}>Loading. . .</Card>
         ) : (
             <Card style={styles.card}>
                 <CardHeader
                     title= {AFpipeline}
-                    subheader= "Display failed build from most recent to last successful build"
+                    subheader= "Display failed build from most recent up to the last successful build"
                     style={styles.cardheader}
                     button component="a"
                     href={AFJenkinLink}
+                    titleTypographyProps={{variant:'h4' }}
+                    subheaderTypographyProps={{variant: 'h6'}}
                     >
-                    {/*
-                    style={styles.cardHeader}>
-                    style={styles.insideCard}> */}
                 </CardHeader>
                 {this.getListContents()}
             </Card>
