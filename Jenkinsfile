@@ -60,7 +60,6 @@ pipeline {
         sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
       }
     }
-  }
   post {
     success {
       script {
