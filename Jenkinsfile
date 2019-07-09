@@ -39,9 +39,9 @@ pipeline {
         }
       }
       steps {
-          sh 'make push'
-        }
+        sh 'make push'
       }
+    }
     // The following stage doesn't actually re-deploy the marathon service, but actually kills the existing docker container
     // that is tied to it, so that marathon reschedules it. This is to get around the annoying dc/os auth issues
     stage('Deploy Marathon Service') {
@@ -59,6 +59,7 @@ pipeline {
         sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
       }
     }
+  }
   post {
     success {
       script {
