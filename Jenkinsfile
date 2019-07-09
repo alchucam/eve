@@ -29,7 +29,6 @@ pipeline {
         ]) {
           sh 'make image SLACK_TOKEN=${SLACK_TOKEN} SLACK_CHANNEL=${SLACK_CHANNEL}'
         }
-        
       }
     }
     stage('Push Image') {
@@ -58,8 +57,7 @@ pipeline {
         }
       }
       steps {
-          sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
-        }
+        sh 'docker rm -f $(docker ps --format "{{.ID}}:{{.Image}}" | grep registry.phx.connexta.com:5000/devops/eve-wallboard-testing | awk -F ":" \'{print $1}\')'
       }
     }
   }
